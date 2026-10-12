@@ -99,6 +99,51 @@
     .summary-line strong { color: var(--ink); font-weight: 750; }
     .summary-line.grand { color: var(--ink); font-size: 15px; font-weight: 800; margin: 15px 0 0; }
     .summary-line.grand strong { color: var(--green); font-size: 22px; letter-spacing: -.6px; }
+    .payment { margin-top: 20px; }
+    .field-label { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; font-weight: 800; margin-bottom: 8px; }
+    .field-label small { font-size: 10px; color: var(--muted); font-weight: 500; }
+    .cash-wrap { display: flex; align-items: center; border: 1.5px solid #dfded6; border-radius: 12px; background: white; padding: 0 12px; transition: border-color .2s, box-shadow .2s; }
+    .cash-wrap:focus-within { border-color: var(--green); box-shadow: 0 0 0 4px #315d4514; }
+    .cash-wrap i { color: var(--muted); font-size: 13px; }
+    .cash-wrap input { min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; padding: 13px 10px; color: var(--ink); font-weight: 700; }
+    .cash-wrap input::placeholder { color: #b5b6ac; font-weight: 500; }
+    .alert { display: flex; gap: 9px; align-items: flex-start; border-radius: 11px; padding: 11px 12px; margin-top: 12px; font-size: 11px; line-height: 1.45; }
+    .alert i { margin-top: 1px; }
+    .alert.error { color: #a12e2e; background: var(--red-bg); border: 1px solid #f4cbc4; }
+    .alert.success { color: #285a3b; background: #eaf5e9; border: 1px solid #cde4ca; }
+    .hidden { display: none !important; }
+    .checkout-btn, .new-btn { width: 100%; border: 0; border-radius: 12px; padding: 14px 15px; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 9px; transition: transform .2s, background .2s; }
+    .checkout-btn { margin-top: 14px; color: white; background: var(--green); box-shadow: 0 7px 15px #315d4524; }
+    .checkout-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .checkout-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+    .new-btn { margin-top: 9px; color: var(--green); background: #edf2e9; }
+    .new-btn:hover { background: #e0eadc; }
+    .receipt-panel { animation: appear .3s ease both; }
+    @keyframes appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .receipt-title { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+    .receipt-title i { color: var(--green); font-size: 17px; }
+    .receipt-title h3 { margin: 0; font-size: 16px; }
+    .receipt-title p { margin: 3px 0 0; font-size: 11px; color: var(--muted); }
+    .receipt-paper { background: #fff; border: 1px solid #ece9e1; padding: 21px 17px; position: relative; box-shadow: 0 5px 14px #252b2408; }
+    .receipt-paper::before { content: ""; height: 6px; position: absolute; top: -1px; left: 0; right: 0; background: repeating-linear-gradient(135deg, var(--green) 0 8px, #fff 8px 13px); }
+    .receipt-brand { text-align: center; padding: 5px 0 14px; border-bottom: 1px dashed #d6d3ca; }
+    .receipt-brand i { color: var(--green); font-size: 23px; }
+    .receipt-brand h4 { font-size: 13px; margin: 7px 0 3px; letter-spacing: .4px; }
+    .receipt-brand p { color: var(--muted); font-size: 10px; margin: 0; }
+    .receipt-ref { display: flex; justify-content: space-between; gap: 10px; margin: 12px 0; font-size: 10px; }
+    .receipt-ref strong { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .receipt-date { color: var(--muted); text-align: center; font-size: 10px; margin: 0 0 12px; }
+    .receipt-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+    .receipt-table th { text-align: left; color: var(--muted); font-weight: 650; padding: 8px 0; border-bottom: 1px solid #e7e4dc; }
+    .receipt-table th:last-child, .receipt-table td:last-child { text-align: right; }
+    .receipt-table td { padding: 9px 0; vertical-align: top; border-bottom: 1px dashed #eeeae2; }
+    .receipt-item-name { font-weight: 750; }
+    .receipt-item-qty { color: var(--muted); display: block; font-size: 9px; margin-top: 3px; }
+    .receipt-totals { margin-top: 12px; }
+    .receipt-totals div { display: flex; justify-content: space-between; margin: 8px 0; font-size: 11px; }
+    .receipt-totals .total { border-top: 1px dashed #d6d3ca; padding-top: 12px; font-weight: 850; font-size: 14px; }
+    .receipt-totals .change { color: var(--green); font-weight: 850; }
+    .receipt-thanks { text-align: center; font-size: 10px; line-height: 1.6; color: var(--muted); border-top: 1px dashed #d6d3ca; padding-top: 13px; margin-top: 14px; }
   </style>
 
 </head>
@@ -139,6 +184,20 @@
           <div class="summary">
             <div class="summary-line"><span>Items in order</span><strong id="itemCount">0 items</strong></div>
             <div class="summary-line grand"><span>Total due</span><strong id="grandTotal">₱0.00</strong></div>
+
+    <form class="payment" id="paymentForm" novalidate>
+            <label class="field-label" for="cashInput"><span><i class="fa-solid fa-money-bill-wave" style="color:var(--green);margin-right:5px"></i> Cash received</span><small>PHP (₱)</small></label>
+            <div class="cash-wrap"><i class="fa-solid fa-peso-sign" aria-hidden="true"></i><input id="cashInput" name="cash" type="number" inputmode="decimal" step="0.01" min="0" placeholder="Enter amount received" autocomplete="off" aria-describedby="paymentAlert"></div>
+            <div id="paymentAlert" class="alert error hidden" role="alert"><i class="fa-solid fa-circle-exclamation"></i><span id="alertMessage"></span></div>
+            <button class="checkout-btn" id="checkoutBtn" type="submit"><i class="fa-solid fa-lock"></i> Validate & Checkout</button>
+            <button class="new-btn" id="newTransactionBtn" type="button"><i class="fa-solid fa-rotate-left"></i> New Transaction</button>
+          </form>
+        </section>
+
+        <section class="panel receipt-panel hidden" id="receiptPanel" aria-labelledby="receiptHeading" aria-live="polite">
+          <div class="receipt-title"><i class="fa-solid fa-receipt"></i><div><h3 id="receiptHeading">Digital Receipt</h3><p>Payment accepted · Transaction complete</p></div></div>
+          <div id="receiptContent"></div>
+        </section>
           </div>
         </section>
       </aside>
@@ -179,5 +238,213 @@
     }
 
     renderMenu();
+    const cashInput = document.getElementById("cashInput");
+    const paymentForm = document.getElementById("paymentForm");
+    const paymentAlert = document.getElementById("paymentAlert");
+    const alertMessage = document.getElementById("alertMessage");
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    const receiptPanel = document.getElementById("receiptPanel");
+    const receiptContent = document.getElementById("receiptContent");
+
+    let transactionComplete = false;
+
+    function showAlert(message, type = "error") {
+      paymentAlert.className = `alert ${type}`;
+      paymentAlert.querySelector("i").className = type === "success" ? "fa-solid fa-circle-check" : "fa-solid fa-circle-exclamation";
+      alertMessage.textContent = message;
+    }
+
+    function clearAlert() {
+      paymentAlert.className = "alert error hidden";
+      alertMessage.textContent = "";
+    }
+
+    function makeReference() {
+      return "TXN-" + Math.floor(100000 + Math.random() * 900000);
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[char]);
+    }
+
+    function buildReceipt(reference, date, items, total, cash, change) {
+      const itemRows = items.map(item => `
+        <tr>
+          <td><span class="receipt-item-name">${escapeHtml(item.name)}</span><span class="receipt-item-qty">Qty: ${item.quantity}</span></td>
+          <td>${peso(item.price * item.quantity)}</td>
+        </tr>
+      `).join("");
+
+      return `
+        <div class="receipt-paper">
+          <div class="receipt-brand">
+            <i class="fa-solid fa-mug-hot"></i>
+            <h4>CAMPUS COFFEE & SNACK KIOSK</h4>
+            <p>Fresh sips. Happy breaks.</p>
+          </div>
+          <div class="receipt-ref"><span>REFERENCE</span><strong>${reference}</strong></div>
+          <p class="receipt-date">${date}</p>
+          <table class="receipt-table">
+            <thead><tr><th>ITEM</th><th>SUBTOTAL</th></tr></thead>
+            <tbody>${itemRows}</tbody>
+          </table>
+          <div class="receipt-totals">
+            <div class="total"><span>TOTAL DUE</span><span>${peso(total)}</span></div>
+            <div><span>Cash paid</span><span>${peso(cash)}</span></div>
+            <div class="change"><span>CHANGE</span><span>${peso(change)}</span></div>
+          </div>
+          <div class="receipt-thanks">Thank you for stopping by!<br>Have a wonderful day on campus.<br><strong>Please keep this receipt for your records.</strong></div>
+        </div>
+      `;
+    }
+
+    paymentForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (transactionComplete) return;
+
+      if (cart.size === 0) {
+        showAlert("Your cart is empty. Please add at least one item before checkout.");
+        return;
+      }
+
+      const rawCash = cashInput.value;
+      if (rawCash.trim() === "") {
+        showAlert("Please enter the cash amount received.");
+        cashInput.focus();
+        return;
+      }
+
+      const cash = Number(rawCash);
+      if (!Number.isFinite(cash)) {
+        showAlert("That amount isn't valid. Please enter a numeric cash amount.");
+        cashInput.focus();
+        return;
+      }
+      if (cash < 0) {
+        showAlert("Cash received cannot be negative. Enter ₱0.00 or more.");
+        cashInput.focus();
+        return;
+      }
+
+      const total = getTotal();
+      if (cash < total) {
+        showAlert(`Insufficient payment. You still need ${peso(total - cash)}.`);
+        cashInput.focus();
+        return;
+      }
+
+      const items = [...cart.values()].map(item => ({ ...item }));
+      const now = new Date();
+      const reference = makeReference();
+      const timestamp = now.toLocaleString("en-PH", {
+        year: "numeric", month: "short", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", second: "2-digit"
+      });
+
+      receiptContent.innerHTML = buildReceipt(reference, timestamp, items, total, cash, cash - total);
+      receiptPanel.classList.remove("hidden");
+      showAlert("Payment accepted! Your receipt is ready.", "success");
+      transactionComplete = true;
+      checkoutBtn.disabled = true;
+      cashInput.disabled = true;
+      document.querySelectorAll(".add-btn, .qty-btn, .remove-btn").forEach(button => button.disabled = true);
+      renderCart();
+    });
+
+    document.getElementById("newTransactionBtn").addEventListener("click", () => {
+      cart.clear();
+      cashInput.value = "";
+      cashInput.disabled = false;
+      transactionComplete = false;
+      receiptContent.innerHTML = "";
+      receiptPanel.classList.add("hidden");
+      clearAlert();
+      renderCart();
+      document.querySelectorAll(".add-btn, .qty-btn, .remove-btn").forEach(button => button.disabled = false);
+    });
+    const cart = new Map();
+    const cartItems = document.getElementById("cartItems");
+    const cartCount = document.getElementById("cartCount");
+    const itemCount = document.getElementById("itemCount");
+    const grandTotal = document.getElementById("grandTotal");
+
+    function getTotal() {
+      return [...cart.values()].reduce((sum, item) => sum + item.price * item.quantity, 0);
+    }
+
+    function getQuantity() {
+      return [...cart.values()].reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    function renderCart() {
+      const entries = [...cart.values()];
+      cartItems.innerHTML = entries.length ? entries.map(item => `
+        <div class="cart-row">
+          <div>
+            <p class="cart-item-name">${item.name}</p>
+            <span class="cart-item-price">${peso(item.price)} each</span>
+          </div>
+          <div>
+            <div class="cart-item-subtotal">${peso(item.price * item.quantity)}</div>
+            <div class="cart-controls">
+              <button class="qty-btn" type="button" data-minus="${item.id}" aria-label="Decrease ${item.name} quantity"><i class="fa-solid fa-minus"></i></button>
+              <span class="qty-value" aria-label="Quantity">${item.quantity}</span>
+              <button class="qty-btn" type="button" data-plus="${item.id}" aria-label="Increase ${item.name} quantity"><i class="fa-solid fa-plus"></i></button>
+              <button class="remove-btn" type="button" data-remove="${item.id}" aria-label="Remove ${item.name}" title="Remove item"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+          </div>
+        </div>
+      `).join("") : `
+        <div class="empty-cart">
+          <div class="empty-illustration"><i class="fa-solid fa-basket-shopping"></i></div>
+          <strong>Your basket is taking a break</strong>
+          <span>Add something tasty from the menu.</span>
+        </div>
+      `;
+
+      const quantity = getQuantity();
+      cartCount.textContent = quantity;
+      itemCount.textContent = `${quantity} ${quantity === 1 ? "item" : "items"}`;
+      grandTotal.textContent = peso(getTotal());
+    }
+
+    function addToCart(id) {
+      const product = products.find(item => item.id === id);
+      if (!product) return;
+      const existing = cart.get(id);
+      if (existing) existing.quantity += 1;
+      else cart.set(id, { ...product, quantity: 1 });
+      renderCart();
+    }
+
+    function changeQuantity(id, delta) {
+      const item = cart.get(id);
+      if (!item) return;
+      item.quantity += delta;
+      if (item.quantity <= 0) cart.delete(id);
+      renderCart();
+    }
+
+    function removeItem(id) {
+      cart.delete(id);
+      renderCart();
+    }
+
+    menuGrid.addEventListener("click", event => {
+      const button = event.target.closest("[data-add]");
+      if (button) addToCart(Number(button.dataset.add));
+    });
+
+    cartItems.addEventListener("click", event => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      if (button.dataset.plus) changeQuantity(Number(button.dataset.plus), 1);
+      else if (button.dataset.minus) changeQuantity(Number(button.dataset.minus), -1);
+      else if (button.dataset.remove) removeItem(Number(button.dataset.remove));
+    });
+
+    renderCart();
   </script>
 </html>
