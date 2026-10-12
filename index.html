@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ed">
+  <title>Campus Coffee & Snack Kiosk | POS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --ink: #242b24;
+      --muted: #777d72;
+      --cream: #f7f4ed;
+      --paper: #fffefa;
+      --green: #315d45;
+      --green-dark: #244735;
+      --mint: #e5eee5;
+      --orange: #e58b55;
+      --line: #e7e4db;
+      --red: #b93838;
+      --red-bg: #fff0ed;
+      --shadow: 0 12px 32px rgba(44, 56, 42, .08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--cream); color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .app { max-width: 1440px; margin: 0 auto; padding: 28px clamp(16px, 3vw, 42px) 40px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 30px; }
+    .brand { display: flex; align-items: center; gap: 13px; }
+    .brand-mark { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 16px; color: white; background: var(--green); font-size: 21px; box-shadow: 0 8px 18px #315d4526; }
+    .brand h1 { font-size: clamp(18px, 2vw, 24px); letter-spacing: -.7px; margin: 0; }
+    .brand p { margin: 4px 0 0; color: var(--muted); font-size: 12px; letter-spacing: .8px; text-transform: uppercase; }
+    .open-pill { border: 1px solid #d8e4d8; color: var(--green); background: #edf5ec; padding: 9px 13px; border-radius: 30px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .open-pill i { font-size: 8px; margin-right: 7px; }
+    .welcome { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin: 0 0 25px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: 11px; font-weight: 800; color: var(--orange); margin: 0 0 8px; }
+    .welcome h2 { font-size: clamp(27px, 4vw, 42px); line-height: 1.08; letter-spacing: -1.7px; margin: 0; }
+    .welcome h2 span { color: var(--green); }
+    .welcome .sub { color: var(--muted); margin: 10px 0 0; font-size: 14px; }
+    .date-chip { border: 1px solid var(--line); background: #ffffff9c; border-radius: 13px; padding: 12px 15px; color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .date-chip i { color: var(--green); margin-right: 7px; }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(330px, .9fr); gap: 24px; align-items: start; }
+    .panel { background: var(--paper); border: 1px solid #eae7df; border-radius: 21px; padding: 21px; box-shadow: var(--shadow); }
+    .side-column { display: grid; gap: 18px; }
+    .footer-note { text-align: center; color: #96988d; font-size: 10px; margin-top: 28px; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></div>
+        <div><h1>Campus Coffee <span style="color:#e58b55">&</span> Snack Kiosk</h1><p>Fresh sips. Happy breaks.</p></div>
+      </div>
+      <div class="open-pill"><i class="fa-solid fa-circle"></i> KIOSK OPEN</div>
+    </header>
+
+    <section class="welcome">
+      <div>
+        <p class="eyebrow">Your campus pick-me-up</p>
+        <h2>A little break.<br><span>A lot of good.</span></h2>
+        <p class="sub">Choose your favorites and we'll take it from here.</p>
+      </div>
+      <div class="date-chip"><i class="fa-regular fa-calendar"></i><span id="todayLabel">Today's menu</span></div>
+    </section>
+
+    <main class="workspace">
+      <section aria-labelledby="menuHeading">
+        <div class="section-head">
+          <div><h3 id="menuHeading">The Menu</h3><p>Made fresh, just for you.</p></div>
+        </div>
+        <p>Loading menu items...</p>
+      </section>
+
+      <aside class="side-column" aria-label="Order and payment">
+        <section class="panel">
+          <h3>Your Order</h3>
+          <p style="color: var(--muted); font-size: 12px;">Cart is currently empty.</p>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="footer-note">Made with <i class="fa-solid fa-heart" style="color:#d88968"></i> for the campus community · Demo POS for learning purposes</footer>
+  </div>
+</body>
+</html>
